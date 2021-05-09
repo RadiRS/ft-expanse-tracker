@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:expensive_track/models/transaction.dart';
 import 'package:expensive_track/widgets/chart.dart';
 import 'package:expensive_track/widgets/new_transaction.dart';
@@ -120,9 +122,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     // Checking device oriantation
-    final bool isLanscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final bool isLanscape = mediaQuery.orientation == Orientation.landscape;
 
     // Store widget to a variable
     final appBar = AppBar(
@@ -136,9 +138,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Calculate the height of AppBar & StatusBar
-    final calculatedTopHeight = MediaQuery.of(context).size.height -
+    final calculatedTopHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
 
     // Store widget to a variable
     final transList = Container(
@@ -160,7 +162,8 @@ class _MyHomePageState extends State<MyHomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('Show Chart'),
-        Switch(
+        // Adaptive widget to render spefict kontent base on platform ios/android
+        Switch.adaptive(
           value: _showChart,
           onChanged: (val) => setState(() => _showChart = val),
         ),
@@ -181,10 +184,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      // Checking spesifick platform
+      floatingActionButton: Platform.isAndroid
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _startAddNewTransaction(context),
+            )
+          : Container(),
     );
   }
 }
