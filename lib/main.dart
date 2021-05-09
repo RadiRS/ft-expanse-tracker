@@ -131,11 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(
-              height: calculatedTopHeight * 0.4,
+              height: calculatedTopHeight * 0.3,
               child: Chart(_recentTransactions),
             ),
             Container(
-              height: calculatedTopHeight * 0.6,
+              height: calculatedTopHeight * 0.7,
               child: TransactionList(_userTransactions, _deleteTransaction),
             ),
           ],
