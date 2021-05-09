@@ -172,15 +172,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Ternery render and if statement render
-            if (isLanscape) toggleSwitch,
-            if (isLanscape) _showChart ? transChart : transList,
-            if (!isLanscape) transChart,
-            if (!isLanscape) transList,
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Ternery render and if statement render
+              if (isLanscape) toggleSwitch,
+              if (isLanscape) _showChart ? transChart : transList,
+              if (!isLanscape) transChart,
+              if (!isLanscape) transList,
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -190,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.add),
               onPressed: () => _startAddNewTransaction(context),
             )
-          : Container(),
+          : null,
     );
   }
 }
