@@ -3,15 +3,15 @@ import 'package:expensive_track/widgets/chart.dart';
 import 'package:expensive_track/widgets/new_transaction.dart';
 import 'package:expensive_track/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 void main() {
   // Set device lock orientation
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
 
   runApp(MyApp());
 }
@@ -57,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _showChart = false;
   final List<Transaction> _userTransactions = [
     Transaction(
       id: 't1',
@@ -138,14 +139,26 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: calculatedTopHeight * 0.3,
-              child: Chart(_recentTransactions),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Show Chart'),
+                Switch(
+                  value: _showChart,
+                  onChanged: (val) => setState(() => _showChart = val),
+                ),
+              ],
             ),
-            Container(
-              height: calculatedTopHeight * 0.7,
-              child: TransactionList(_userTransactions, _deleteTransaction),
-            ),
+            _showChart
+                ? Container(
+                    height: calculatedTopHeight * 0.3,
+                    child: Chart(_recentTransactions),
+                  )
+                : Container(
+                    height: calculatedTopHeight * 0.7,
+                    child:
+                        TransactionList(_userTransactions, _deleteTransaction),
+                  ),
           ],
         ),
       ),
