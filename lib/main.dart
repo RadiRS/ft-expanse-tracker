@@ -119,6 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Checking device oriantation
+    final bool isLanscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    // Store widget to a variable
     final appBar = AppBar(
       title: Text('Expensive Tracking Apps'),
       actions: [
@@ -134,33 +139,43 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
 
+    // Store widget to a variable
+    final transList = Container(
+      height: calculatedTopHeight * 0.7,
+      child: TransactionList(
+        _userTransactions,
+        _deleteTransaction,
+      ),
+    );
+
+    // Store widget to a variable
+    final transChart = Container(
+      height: calculatedTopHeight * (isLanscape ? 0.7 : 0.3),
+      child: Chart(_recentTransactions),
+    );
+
+    // Store widget to a variable
+    final toggleSwitch = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('Show Chart'),
+        Switch(
+          value: _showChart,
+          onChanged: (val) => setState(() => _showChart = val),
+        ),
+      ],
+    );
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Show Chart'),
-                Switch(
-                  value: _showChart,
-                  onChanged: (val) => setState(() => _showChart = val),
-                ),
-              ],
-            ),
-            _showChart
-                ? Container(
-                    height: calculatedTopHeight * 0.7,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: calculatedTopHeight * 0.7,
-                    child: TransactionList(
-                      _userTransactions,
-                      _deleteTransaction,
-                    ),
-                  ),
+            // Ternery render and if statement render
+            if (isLanscape) toggleSwitch,
+            if (isLanscape) _showChart ? transChart : transList,
+            if (!isLanscape) transChart,
+            if (!isLanscape) transList,
           ],
         ),
       ),
