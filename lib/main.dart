@@ -151,13 +151,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             _showChart
                 ? Container(
-                    height: calculatedTopHeight * 0.3,
+                    height: calculatedTopHeight * 0.7,
                     child: Chart(_recentTransactions),
                   )
                 : Container(
                     height: calculatedTopHeight * 0.7,
-                    child:
-                        TransactionList(_userTransactions, _deleteTransaction),
+                    child: TransactionList(
+                      _userTransactions,
+                      _deleteTransaction,
+                    ),
                   ),
           ],
         ),

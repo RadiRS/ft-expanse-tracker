@@ -13,6 +13,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use LayoutBuilder to get the constraint value of the device
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final mHeight = constraints.maxHeight * 0.05;
