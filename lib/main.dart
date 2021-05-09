@@ -3,8 +3,16 @@ import 'package:expensive_track/widgets/chart.dart';
 import 'package:expensive_track/widgets/new_transaction.dart';
 import 'package:expensive_track/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  // Set device lock orientation
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(MyApp());
 }
 
