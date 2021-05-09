@@ -10,6 +10,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Checking width of screen
+    final isLargeWidth = MediaQuery.of(context).size.width > 460;
+
     return transactions.isEmpty
         // Use LayoutBuilder to get the constraint value of the device
         ? LayoutBuilder(
@@ -59,13 +62,24 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(
                     DateFormat.yMMMEd().format(transactions[index].date),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete_outline),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => deleteTransaction(
-                      transactions[index].id,
-                    ),
-                  ),
+                  trailing: isLargeWidth
+                      ? TextButton.icon(
+                          icon: Icon(Icons.delete_outline),
+                          style: TextButton.styleFrom(
+                            primary: Theme.of(context).errorColor,
+                          ),
+                          onPressed: () => deleteTransaction(
+                            transactions[index].id,
+                          ),
+                          label: Text('Deleted'),
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete_outline),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => deleteTransaction(
+                            transactions[index].id,
+                          ),
+                        ),
                 ),
               );
             },
