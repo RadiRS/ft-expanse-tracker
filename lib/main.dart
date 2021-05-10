@@ -120,6 +120,27 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLanscapeContent(Widget transChart, Widget transList) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Show Chart'),
+          // Adaptive widget to render spefict kontent base on platform ios/android
+          Switch.adaptive(
+            value: _showChart,
+            onChanged: (val) => setState(() => _showChart = val),
+          ),
+        ],
+      ),
+      _showChart ? transChart : transList
+    ];
+  }
+
+  List<Widget> _buildPotraitContent(Widget transChart, Widget transList) {
+    return [transChart, transList];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -157,30 +178,15 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Chart(_recentTransactions),
     );
 
-    // Store widget to a variable
-    final toggleSwitch = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('Show Chart'),
-        // Adaptive widget to render spefict kontent base on platform ios/android
-        Switch.adaptive(
-          value: _showChart,
-          onChanged: (val) => setState(() => _showChart = val),
-        ),
-      ],
-    );
-
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Ternery render and if statement render
-              if (isLanscape) toggleSwitch,
-              if (isLanscape) _showChart ? transChart : transList,
-              if (!isLanscape) transChart,
-              if (!isLanscape) transList,
+              // Spreed operator to avoid error list of list
+              if (isLanscape) ..._buildLanscapeContent(transChart, transList),
+              if (!isLanscape) ..._buildPotraitContent(transChart, transList),
             ],
           ),
         ),
