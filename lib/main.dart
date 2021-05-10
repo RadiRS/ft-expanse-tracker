@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final toggleSwitch = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Show Chart'),
+        const Text('Show Chart'),
         // Adaptive widget to render spefict kontent base on platform ios/android
         Switch.adaptive(
           value: _showChart,

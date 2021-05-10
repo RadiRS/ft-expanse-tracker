@@ -23,7 +23,7 @@ class TransactionList extends StatelessWidget {
                     'No transactions',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     height: constraints.maxHeight * 0.6,
                     child: Image.asset(
@@ -64,17 +64,17 @@ class TransactionList extends StatelessWidget {
                   ),
                   trailing: isLargeWidth
                       ? TextButton.icon(
-                          icon: Icon(Icons.delete_outline),
+                          icon: const Icon(Icons.delete_outline),
                           style: TextButton.styleFrom(
                             primary: Theme.of(context).errorColor,
                           ),
                           onPressed: () => deleteTransaction(
                             transactions[index].id,
                           ),
-                          label: Text('Deleted'),
+                          label: const Text('Deleted'),
                         )
                       : IconButton(
-                          icon: Icon(Icons.delete_outline),
+                          icon: const Icon(Icons.delete_outline),
                           color: Theme.of(context).errorColor,
                           onPressed: () => deleteTransaction(
                             transactions[index].id,

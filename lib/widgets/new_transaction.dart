@@ -102,7 +102,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                 ),
                 onPressed: _onSubmit,
-                child: Text('Add Transaction'),
+                child: const Text('Add Transaction'),
               ),
             ],
           ),
